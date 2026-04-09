@@ -13,6 +13,12 @@ Run this each time when starting development
 ```bash
 ./venv/Scripts/activate
 ```
+on Windows, or
+
+```bash
+source ./venv/bin/activate
+```
+on Linux.
 
 First time only (Check that "(venv)" is in front of your name!):
 ```bash

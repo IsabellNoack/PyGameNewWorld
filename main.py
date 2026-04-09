@@ -24,20 +24,19 @@ print("world tileset:",world_tileset)
 generated_world = GenerateWorld(seed)
 
 # Player
-# TODO: Player auf 0,0 starten, nicht anhand world_surface sondern anhand der world coordinates
-player_pos = pygame.Vector2(world_surface.get_width() / 2, world_surface.get_height() / 2)
+player_pos = pygame.Vector2(0, 0)
 player = Player(player_pos)
 
 # Slime
-slime_pos = pygame.Vector2(world_surface.get_width() / 2, world_surface.get_height() / 2 + 50)
+slime_pos = pygame.Vector2(0, 0 + 50)
 slime = Slime(slime_pos, player)
 
 # Chest
-chest_pos = pygame.Vector2(world_surface.get_width() / 2 + 60, world_surface.get_height() / 2 - 50)
+chest_pos = pygame.Vector2(0 + 60, 0 - 50)
 chest = Chest(chest_pos, player)
 
 # Camera
-camera_pos = pygame.Vector2(world_surface.get_width() / 2, world_surface.get_height() / 2)
+camera_pos = pygame.Vector2(0, 0)
 camera = Camera(camera_pos)
 
 entities = [
@@ -52,9 +51,12 @@ def mix(a, b, f):
     return a + (b-a) * f
 
 while True:
+    isFinished = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
+            isFinished = True
+            break
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
             camera.toggle_follow()
@@ -73,7 +75,10 @@ while True:
         if event.type == pygame.VIDEORESIZE:
             world_surface = pygame.Surface((screen.get_width() / world_scale, screen.get_height() / world_scale)) # 1/4th of display since we want to scale it later up by 4  
 
-    if (dt == 0):
+    if isFinished:
+        break
+
+    if dt == 0:
         dt = 1/1000
 
     # ------------------
